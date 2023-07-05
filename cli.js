@@ -8,13 +8,13 @@ import makeRule from "./rule.js";
 import makeMail from "./mail.js";
 import Seeder from "../../core/seeder/Seeder.js";
 
-program
-    .command('make:model <name>')
+//program
+  //  .command('make:model <name>')
     // .option('-n, --media <media>', 'pair with media')
     // // .option('-n, --media <media>', 'pair with media')
-    .action((name) => {
-        makeModel(name)
-    });
+  //  .action((name) => {
+    //    makeModel(name)
+  //  });
 program
     .command('make:request <name>')
     .action((name) => {
