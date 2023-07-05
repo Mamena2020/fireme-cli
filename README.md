@@ -1,9 +1,12 @@
 # fireme-cli
 
+# install
+
+ - npm i fireme-cli
 
 # command
 
- - npm fireme make:request
- - npm fireme make:resource
- - npm fireme make:rule
- - npm fireme make:mail
+ - npx fireme make:request
+ - npx fireme make:resource
+ - npx fireme make:rule
+ - npx fireme make:mail
