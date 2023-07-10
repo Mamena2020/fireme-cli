@@ -6,25 +6,21 @@ const scripts = () => {
 
 class ClassName extends RequestValidation {
     constructor(req) {
-        super(req).load(this)
+        super(req).load(this);
     }
 
     /**
      * Get the validation rules that apply to the request.
-     *
      * @return object
      */
     rules() {
         return {
            
-        }
+        };
     }
 }
 
-
-export default ClassName
-    
-    `
+export default ClassName;`
 }
 
 const makeRequest = (name) => {
@@ -50,7 +46,8 @@ const makeRequest = (name) => {
             for (let i = 0; i < count; i++) {
                 importRequestValidaion = `../` + importRequestValidaion
             }
-            importRequestValidaion = `import RequestValidation from "` + importRequestValidaion + `\n`
+            importRequestValidaion = `/* eslint-disable linebreak-style */\n
+            import RequestValidation from "` + importRequestValidaion + `\n`
 
             // get class name from path
             let names = name.split("/") // Catalog/ProductRequest  
