@@ -3,7 +3,6 @@ import fse from "fs-extra"
 
 const scripts = () => {
     return `
-
 class ClassName extends RequestValidation {
     constructor(req) {
         super(req).load(this);
@@ -15,12 +14,12 @@ class ClassName extends RequestValidation {
      */
     rules() {
         return {
-           
         };
     }
 }
 
-export default ClassName;`
+export default ClassName;
+`
 }
 
 const makeRequest = (name) => {
@@ -40,14 +39,13 @@ const makeRequest = (name) => {
                 return;
             }
             // add path tree
-            let importRequestValidaion = `core/validation/RequestValidation.js"`
+            let importRequestValidaion = `core/validation/RequestValidation.js';`
             let count = file.split("").filter(c => c === "/").length
 
             for (let i = 0; i < count; i++) {
                 importRequestValidaion = `../` + importRequestValidaion
             }
-            importRequestValidaion = `/* eslint-disable linebreak-style */\n
-            import RequestValidation from "` + importRequestValidaion + `\n`
+            importRequestValidaion = `/* eslint-disable linebreak-style */\nimport RequestValidation from '` + importRequestValidaion + `\n`
 
             // get class name from path
             let names = name.split("/") // Catalog/ProductRequest  
