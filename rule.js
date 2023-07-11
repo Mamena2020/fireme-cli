@@ -1,39 +1,32 @@
 import fse from "fs-extra"
 
-
 const scripts = () => {
-    return `
-
-class ClassName  {
-
-    constructor() {
-    }
+return `/* eslint-disable linebreak-style */
+class ClassName {
+    // constructor() {
+    // }
 
     /**
      * Determine if the validation rule passes.
-     * @param {*} attribute 
-     * @param {*} value 
-     * @returns bolean
+     * @param {*} attribute
+     * @param {*} value
+     * @returns boolean
      */
     passes(attribute, value) {
-        return false
+        return false;
     }
 
     /**
      * Get the validation error message.
-     *
      * @return string
      */
     message() {
-        return 'The _attribute_ must be .....'
+        return 'The _attribute_ must be .....';
     }
-
 }
 
-
-export default ClassName
-    
-    `
+export default ClassName;
+`
 }
 
 const makeRule = (name) => {

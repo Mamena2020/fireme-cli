@@ -10,9 +10,10 @@ ClassName.init({
     fields: {
         name: {
             type: DataTypes.string,
+            nullable: false,
         },
     },
-    collection: 'collection_name',
+    collection: 'collectionName',
     hasRole: false,
 });
 
@@ -51,7 +52,7 @@ const makeModel = (name) => {
             let className = names[names.length - 1] // Product
             let collectionName = makeSnakeCase(className)+"s"
             // change class name from default script
-            const content = modelScript().replace(/ClassName/g, className).replace(/collection_name/g,collectionName)
+            const content = modelScript().replace(/ClassName/g, className).replace(/collectionName/g,collectionName)
 
             // adding import packages on top of line
             let lines = content.split("\n")

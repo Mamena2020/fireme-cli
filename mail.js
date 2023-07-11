@@ -4,34 +4,32 @@ import fse from "fs-extra"
 
 const scriptsEmail = () => {
     return `
-
 class ClassName extends Mail {
     constructor(from = '', to = [], subject = '') {
         super().load({
-            from: from,
-            to: to,
-            subject: subject,
-            text: "Just need to verify that this is your email address.",
+            from,
+            to,
+            subject,
+            text: 'Just need to verify that this is your email address.',
             attachments: [
                 {
-                    filename: "theFile.txt",
-                    path: "exampleFileName"
+                    filename: 'theFile.txt',
+                    path: 'exampleFileName',
                 },
             ],
             html: {
-                path: "htmlName",
+                path: 'htmlName',
                 data: {
-                    title: "Welcome to the party!",
-                    message: "Just need to verify that this is your email address."
-                }
+                    title: 'Welcome to the party!',
+                    message: 'Just need to verify that this is your email address.',
+                },
             },
-        })
+        });
     }
 }
 
-export default ClassName
-    
-    `
+export default ClassName;
+`
 }
 
 const scriptsHtml = () => {
@@ -57,7 +55,7 @@ const scriptsHtml = () => {
         Regards.
     </p>
     <p>
-        Nodemi
+        Fireme
     </p>
 </body>
 
@@ -98,13 +96,13 @@ const makeMail = (name) => {
                 return;
             }
             // add path tree
-            let importMail = `core/mail/Mail.js"`
+            let importMail = `core/mail/Mail.js';`
             let count = file.split("").filter(c => c === "/").length
 
             for (let i = 0; i < count; i++) {
                 importMail = `../` + importMail
             }
-            importMail = `import Mail from "` + importMail + `\n`
+            importMail = `/* eslint-disable linebreak-style */\nimport Mail from '` + importMail + `\n`
 
             // get model name from path
 

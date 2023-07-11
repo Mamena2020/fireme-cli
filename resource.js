@@ -2,29 +2,24 @@ import fse from "fs-extra"
 
 
 const scripts = () => {
-    return `
-
+return `
 class ClassName extends Resource {
     constructor() {
-        super().load(this)
+        super().load(this);
     }
 
     /**
      * Transform the resource into custom object.
-     *
-     * @return 
-    */
+     * @return object
+     */
     toArray(data) {
         return {
-           
-        }
+        };
     }
 }
 
-
-export default ClassName
-    
-    `
+export default ClassName;
+`
 }
 
 const makeResource = (name) => {
@@ -44,13 +39,13 @@ const makeResource = (name) => {
                 return;
             }
             // add path tree
-            let importResource = `core/resource/Resource.js"`
+            let importResource = `core/resource/Resource.js';`
             let count = file.split("").filter(c => c === "/").length
 
             for (let i = 0; i < count; i++) {
                 importResource = `../` + importResource
             }
-            importResource = `import Resource from "` + importResource + `\n`
+            importResource = `/* eslint-disable linebreak-style */\nimport Resource from '` + importResource + `\n`
 
             // get class name from path
             let names = name.split("/") // Catalog/ProductRequest  
