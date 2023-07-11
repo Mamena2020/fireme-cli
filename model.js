@@ -2,30 +2,22 @@ import fse from "fs-extra"
 
 
 const modelScript = () => {
-    return `import { Model, DataTypes } from "sequelize";
-
-
+    return `
 class ClassName extends Model {
 }
 
 ClassName.init({
-// Model attributes are defined here
-// name: {
-//    type: DataTypes.STRING,
-//    allowNull: false
-// }
- }, 
- {
-   sequelize: db, 
-   tableName: 'TableName', 
-   modelName: 'ClassName', 
-   timestamps: true
- }
-);
+    fields: {
+        name: {
+            type: DataTypes.string,
+        },
+    },
+    collection: 'collection_name',
+    hasRole: false,
+});
 
-export default ClassName
-    
-    `
+export default ClassName;
+`
 }
 
 const makeModel = (name) => {
@@ -45,24 +37,25 @@ const makeModel = (name) => {
                 return;
             }
             // add path tree
-            let importDBLine = `core/database/Database.js"`
+            let importModelLine = `core/model/Model.js';`
             let count = file.split("").filter(c => c === "/").length
 
             for (let i = 0; i < count; i++) {
-                importDBLine = `../` + importDBLine
+                importModelLine = `../` + importModelLine
             }
-            importDBLine = `import db from "` + importDBLine + `\n`
+            
+            importModelLine = `/* eslint-disable linebreak-style */\nimport Model, { DataTypes } from '` + importModelLine + `\n`
 
             // get class name from path
             let names = name.split("/") // Catalog/Product  
             let className = names[names.length - 1] // Product
-            let tableName = makeSnakeCase(className)+"s"
+            let collectionName = makeSnakeCase(className)+"s"
             // change class name from default script
-            const content = modelScript().replace(/ClassName/g, className).replace(/TableName/g,tableName)
+            const content = modelScript().replace(/ClassName/g, className).replace(/collection_name/g,collectionName)
 
             // adding import packages on top of line
             let lines = content.split("\n")
-            lines[0] = importDBLine + lines[0]
+            lines[0] = importModelLine + lines[0]
             let updatedContent = lines.join("\n")
 
             fse.writeFile(file, updatedContent, (errWrite) => {
@@ -70,7 +63,6 @@ const makeModel = (name) => {
                     console.log("\x1b[31m", "errWrite", errWrite, "\x1b[0m")
                     return;
                 }
-                addToCoreModels(className, file)
                 console.log("\x1b[32m", `File created: ${file}`, "\x1b[0m")
             });
         })
@@ -80,36 +72,6 @@ const makeModel = (name) => {
         console.log("\x1b[31m", `File already exists: ${file}`, "\x1b[0m")
     }
 }
-
-const addToCoreModels = (className, pathModel) => {
-
-
-    fse.readFile("core/model/Models.js", "utf-8", (err, data) => {
-        if (err) {
-            console.log("\x1b[31m", "err", err, "\x1b[0m")
-            return;
-        }
-
-
-        let addModule = `import ` + className + ` from "../../` + pathModel + `"\n`
-
-        let addModel = `\n    await ` + className + `.sync()\n\n`
-
-
-        let index = data.lastIndexOf(`}`);
-        if (index !== -1) {
-
-            data = data.substring(0, index) + addModel + data.substring(index);
-            data = addModule + data.substring(0, data.length)
-            fse.writeFile("core/model/Models.js", data, (err) => {
-                if (err) throw err;
-
-                console.log("\x1b[32m", `${className} model registered on core/model/Models.js`, "\x1b[0m")
-            });
-        }
-    })
-}
-
 
 const makeSnakeCase = (str) => {
     let result = str.replace(/([A-Z])/g, (match) => `_${match.toLowerCase()}`);

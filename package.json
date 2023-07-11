@@ -1,6 +1,6 @@
 {
   "name": "fireme-cli",
-  "version": "1.0.52",
+  "version": "1.0.55",
   "description": "",
    "type": "module", 
    "bin": {
